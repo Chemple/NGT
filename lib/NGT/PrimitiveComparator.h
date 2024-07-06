@@ -469,22 +469,22 @@ inline static double compareHammingDistance(const OBJECT_TYPE *a, const OBJECT_T
 {
     size_t count = 0;
     const OBJECT_TYPE *last = a + size;
-#if defined(__AVX512F__)
-    while (a + 64 <= last)
-    {
-        __m512i vxor = _mm512_xor_si512(_mm512_loadu_si512(reinterpret_cast<const __m512i *>(a)), _mm512_loadu_si512(reinterpret_cast<const __m512i *>(b)));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 0));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 1));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 2));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 3));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 4));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 5));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 6));
-        count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 7));
-        a += 64;
-        b += 64;
-    }
-#endif
+// #if defined(__AVX512F__)
+//     while (a + 64 <= last)
+//     {
+//         __m512i vxor = _mm512_xor_si512(_mm512_loadu_si512(reinterpret_cast<const __m512i *>(a)), _mm512_loadu_si512(reinterpret_cast<const __m512i *>(b)));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 0));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 1));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 2));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 3));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 4));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 5));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 6));
+//         count += _mm_popcnt_u64(_mm512_extract_epi64(vxor, 7));
+//         a += 64;
+//         b += 64;
+//     }
+// #endif
 
 #if defined(__AVX512F__) || defined(__AVX2__)
     while (a + 32 <= last)
